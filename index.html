@@ -3,40 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shopify Theme Demo - Luxe Intimates</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;700&family=Great+Vibes&family=Lato:wght@400;700&family=Cinzel:wght@700&family=Montserrat:wght@400;600;700&family=Lora:wght@700&family=Roboto:wght@400;500&family=Cormorant+Garamond:wght@500;600&family=Source+Sans+Pro:wght@400;600&family=Libre+Baskerville:wght@400;700&family=Crimson+Text:wght@500;600;700&family=Nunito+Sans:wght@400;600&family=Abril+Fatface&display=swap" rel="stylesheet">
+  <title>Luxe Intimates - Premium Comfort</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;700&family=Great+Vibes&family=Lato:wght@400;700&family=Cinzel:wght@700&family=Montserrat:wght@400;600;700&family=Lora:wght@400;700&family=Roboto:wght@400;500&family=Cormorant+Garamond:wght@500;600&family=Source+Sans+Pro:wght@400;600&family=Libre+Baskerville:wght@400;700&family=Crimson+Text:wght@500;600;700&family=Nunito:wght@400;700&family=Abril+Fatface&family=EB+Garamond:wght@400;500&family=Merriweather:wght@400;700&family=Anton&display=swap" rel="stylesheet">
   <style>
     /* Base Styles */
+    * { box-sizing: border-box; }
     body {
       margin: 0;
+      font-size: clamp(1rem, 2vw, 1.2rem);
       transition: all 0.3s ease;
+      overflow-x: hidden;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 0 clamp(1rem, 5vw, 2rem);
+      padding: clamp(1rem, 3vw, 2rem);
     }
 
-    nav {
+    header {
       position: sticky;
       top: 0;
       background: inherit;
-      padding: 1rem 0;
       z-index: 1000;
       border-bottom: 1px solid rgba(0,0,0,0.1);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+    }
+
+    .logo {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      text-decoration: none;
     }
 
     .nav-links {
       display: flex;
-      gap: 20px;
-      justify-content: center;
+      gap: clamp(15px, 2vw, 25px);
     }
 
     .nav-links a {
       text-decoration: none;
       font-weight: 600;
       cursor: pointer;
+      transition: color 0.3s ease;
     }
 
     .controls {
@@ -44,97 +60,148 @@
       gap: 20px;
       margin: 20px 0;
       align-items: center;
+      justify-content: center;
     }
 
     select {
-      padding: 8px;
+      padding: 10px;
       font-size: 16px;
-      border-radius: 4px;
+      border-radius: 6px;
+      border: 1px solid rgba(0,0,0,0.2);
+      background: #fff;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #333;
     }
 
     .section {
-      padding: clamp(2rem, 5vw, 4rem) 0;
+      padding: clamp(3rem, 6vw, 5rem) 0;
       display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
     .section.active {
       display: block;
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .hero {
       text-align: center;
-      padding: 4rem 0;
+      padding: clamp(4rem, 10vw, 6rem) 0;
       background-size: cover;
       background-position: center;
       color: inherit;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.3);
+      z-index: 0;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
     }
 
     .hero h1 {
       margin: 0;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
     }
 
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin: 20px 0;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: clamp(20px, 3vw, 30px);
+      margin: clamp(20px, 4vw, 40px) 0;
     }
 
     .product-card {
       text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 20px;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
     }
 
     .product-card img {
       width: 100%;
-      height: 200px;
+      height: 250px;
       object-fit: cover;
       border-radius: 8px;
     }
 
     .button {
-      padding: 10px 20px;
-      margin: 5px;
+      padding: 12px 24px;
+      margin: 8px;
       border: none;
       cursor: pointer;
       font-size: 16px;
-      border-radius: 4px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .button:hover {
+      transform: scale(1.05);
     }
 
     footer {
       text-align: center;
-      padding: 2rem 0;
+      padding: clamp(2rem, 5vw, 3rem) 0;
       border-top: 1px solid rgba(0,0,0,0.1);
+      background: inherit;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
     }
 
     .faq-item {
-      margin: 20px 0;
+      margin: clamp(20px, 3vw, 30px) 0;
+      padding: 20px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
     }
 
-    .faq-item h4 {
-      margin: 0;
-    }
-
-    /* Typography Demo Section */
-    .typography-demo {
-      margin-top: 40px;
-    }
-
-    .typography-demo h1, .typography-demo h2, .typography-demo h3, .typography-demo h4, .typography-demo h5, .typography-demo h6 {
-      margin: 10px 0;
-    }
-
-    .typography-demo p {
-      margin: 10px 0;
+    .typography-demo h1, .typography-demo h2, .typography-demo h3,
+    .typography-demo h4, .typography-demo h5, .typography-demo h6,
+    .typography-demo p, .typography-demo blockquote,
+    .typography-demo figure, .typography-demo .buttons {
+      margin: 15px 0;
     }
 
     .typography-demo blockquote {
-      margin: 20px 0;
-      padding: 10px 20px;
-      border-left: 4px solid;
-    }
-
-    .typography-demo figure {
-      margin: 20px 0;
+      padding: 15px 25px;
+      border-left: 5px solid;
+      background: rgba(255,255,255,0.05);
     }
 
     .typography-demo figure img {
@@ -145,942 +212,910 @@
     .typography-demo figure figcaption {
       text-align: center;
       margin-top: 10px;
+      font-style: italic;
     }
 
     .typography-demo .buttons {
       display: flex;
-      gap: 10px;
-      margin: 20px 0;
+      flex-wrap: wrap;
+      gap: 15px;
     }
 
     .typography-demo a {
       text-decoration: underline;
       cursor: pointer;
+      transition: color 0.3s ease;
     }
 
-    /* Original Passionate Elegance */
-    .theme-original-passionate-elegance {
+    /* Sophisticated Allure */
+    .theme-sophisticated-allure {
       font-family: 'Open Sans', sans-serif;
-      font-size: clamp(0.875rem, 1.5vw, 1rem);
+      font-size: clamp(1rem, 2vw, 1.2rem);
       font-weight: 400;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.01em;
       line-height: 1.5;
     }
 
-    .theme-original-passionate-elegance h1, .theme-original-passionate-elegance h2, .theme-original-passionate-elegance h3, .theme-original-passionate-elegance h4, .theme-original-passionate-elegance h5, .theme-original-passionate-elegance h6 {
+    .theme-sophisticated-allure h1, .theme-sophisticated-allure h2,
+    .theme-sophisticated-allure h3, .theme-sophisticated-allure h4,
+    .theme-sophisticated-allure h5, .theme-sophisticated-allure h6 {
       font-family: 'Playfair Display', serif;
-      letter-spacing: 0.05em;
+      font-weight: 700;
+      letter-spacing: -0.02em;
       line-height: 1.2;
     }
 
-    .theme-original-passionate-elegance h1 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; }
-    .theme-original-passionate-elegance h2 { font-size: clamp(1.75rem, 3.5vw, 3rem); font-weight: 700; }
-    .theme-original-passionate-elegance h3 { font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 700; }
-    .theme-original-passionate-elegance h4 { font-size: clamp(1.25rem, 2.5vw, 2rem); font-weight: 400; }
-    .theme-original-passionate-elegance h5 { font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 400; }
-    .theme-original-passionate-elegance h6 { font-size: clamp(0.875rem, 1.5vw, 1.25rem); font-weight: 400; }
+    .theme-sophisticated-allure h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+    .theme-sophisticated-allure h2 { font-size: clamp(2.25rem, 4.5vw, 3.6rem); }
+    .theme-sophisticated-allure h3 { font-size: clamp(2rem, 4vw, 3.2rem); }
+    .theme-sophisticated-allure h4 { font-size: clamp(1.75rem, 3.5vw, 2.8rem); }
+    .theme-sophisticated-allure h5 { font-size: clamp(1.5rem, 3vw, 2.4rem); }
+    .theme-sophisticated-allure h6 { font-size: clamp(1.25rem, 2.5vw, 2rem); }
 
-    .theme-original-passionate-elegance.scheme-1 {
-      background-color: #FFFFFF;
+    .theme-sophisticated-allure.scheme-1 {
+      background: #F4F4F4;
+      color: #1A1A1A;
+    }
+
+    .theme-sophisticated-allure.scheme-1 .container {
+      background: #FFFFFF;
+      margin: clamp(1rem, 5vw, 3rem);
+      padding: clamp(1rem, 3vw, 2rem);
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .theme-sophisticated-allure.scheme-1 .product-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 8px;
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.05);
+    }
+    .theme-sophisticated-allure.scheme-1 .button--primary {
+      background: #1A1A1A;
+      color: #FFFFFF;
+    }
+    .theme-sophisticated-allure.scheme-1 .button--secondary {
+      background: #FFFFFF;
+      color: #1A1A1A;
+    }
+    .theme-sophisticated-allure.scheme-1 .button--outline {
+      background: transparent;
+      border: 1px solid #1A1A1A;
+      color: #1A1A1A;
+    }
+    .theme-sophisticated-allure.scheme-1 .nav-links a { color: #1A1A1A; }
+    .theme-sophisticated-allure.scheme-1 .nav-links a:hover,
+    .theme-sophisticated-allure.scheme-1 a { color: #333333; }
+    .theme-sophisticated-allure.scheme-1 .typography-demo blockquote { border-color: #1A1A1A; }
+    .theme-sophisticated-allure.scheme-1 .footer-links a { color: #1A1A1A; }
+    .theme-sophisticated-allure.scheme-1 .footer-links a:hover { color: #333333; }
+
+    .theme-sophisticated-allure.scheme-2 {
+      background: #FFFFFF;
       color: #333333;
     }
 
-    .theme-original-passionate-elegance.scheme-1 .button--primary { background-color: #D32F2F; color: #FFFFFF; }
-    .theme-original-passionate-elegance.scheme-1 .button--secondary { background-color: #757575; color: #FFFFFF; }
-    .theme-original-passionate-elegance.scheme-1 .button--outline { background-color: transparent; border: 1px solid #D32F2F; color: #D32F2F; }
-    .theme-original-passionate-elegance.scheme-1 .product-card { background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 20px; }
-    .theme-original-passionate-elegance.scheme-1 .container { background-color: #F5F5F5; }
-    .theme-original-passionate-elegance.scheme-1 .nav-links a { color: #333333; }
-    .theme-original-passionate-elegance.scheme-1 .nav-links a:hover { color: #D32F2F; }
-    .theme-original-passionate-elegance.scheme-1 .typography-demo blockquote { border-color: #D32F2F; }
-    .theme-original-passionate-elegance.scheme-1 a { color: #D32F2F; }
+    .theme-sophisticated-allure.scheme-2 .container {
+      background: #FFFFFF;
+      margin: clamp(1rem, 5vw, 3rem);
+      padding: clamp(1rem, 3vw, 2rem);
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .theme-sophisticated-allure.scheme-2 .product-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 8px;
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.05);
+    }
+    .theme-sophisticated-allure.scheme-2 .button--primary {
+      background: #C90084;
+      color: #FFFFFF;
+    }
+    .theme-sophisticated-allure.scheme-2 .button--secondary {
+      background: #F4F4F4;
+      color: #C90084;
+    }
+    .theme-sophisticated-allure.scheme-2 .button--outline {
+      background: transparent;
+      border: 1px solid #C90084;
+      color: #C90084;
+    }
+    .theme-sophisticated-allure.scheme-2 .nav-links a { color: #333333; }
+    .theme-sophisticated-allure.scheme-2 .nav-links a:hover,
+    .theme-sophisticated-allure.scheme-2 a { color: #C90084; }
+    .theme-sophisticated-allure.scheme-2 .typography-demo blockquote { border-color: #C90084; }
+    .theme-sophisticated-allure.scheme-2 .footer-links a { color: #333333; }
+    .theme-sophisticated-allure.scheme-2 .footer-links a:hover { color: #C90084; }
 
-    .theme-original-passionate-elegance.scheme-2 {
-      background-color: #D32F2F;
+    .theme-sophisticated-allure.scheme-3 {
+      background: #1A1A1A;
       color: #FFFFFF;
     }
 
-    .theme-original-passionate-elegance.scheme-2 .button--primary { background-color: #333333; color: #FFFFFF; }
-    .theme-original-passionate-elegance.scheme-2 .button--secondary { background-color: #757575; color: #FFFFFF; }
-    .theme-original-passionate-elegance.scheme-2 .button--outline { background-color: transparent; border: 1px solid #FFFFFF; color: #FFFFFF; }
-    .theme-original-passionate-elegance.scheme-2 .product-card { background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(255,255,255,0.2); padding: 20px; }
-    .theme-original-passionate-elegance.scheme-2 .container { background-color: #F5F5F5; }
-    .theme-original-passionate-elegance.scheme-2 .nav-links a { color: #FFFFFF; }
-    .theme-original-passionate-elegance.scheme-2 .nav-links a:hover { color: #333333; }
-    .theme-original-passionate-elegance.scheme-2 .typography-demo blockquote { border-color: #FFFFFF; }
-    .theme-original-passionate-elegance.scheme-2 a { color: #FFFFFF; }
-
-    .theme-original-passionate-elegance.scheme-3 {
-      background-color: #121212;
-      color: #E0E0E0;
+    .theme-sophisticated-allure.scheme-3 .container {
+      background: #FFFFFF;
+      margin: clamp(1rem, 5vw, 3rem);
+      padding: clamp(1rem, 3vw, 2rem);
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
     }
+    .theme-sophisticated-allure.scheme-3 .product-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 8px;
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
+    }
+    .theme-sophisticated-allure.scheme-3 .button--primary {
+      background: #FF69B4;
+      color: #FFFFFF;
+    }
+    .theme-sophisticated-allure.scheme-3 .button--secondary {
+      background: #333333;
+      color: #FFFFFF;
+    }
+    .theme-sophisticated-allure.scheme-3 .button--outline {
+      background: transparent;
+      border: 1px solid #FF69B4;
+      color: #FF69B4;
+    }
+    .theme-sophisticated-allure.scheme-3 .nav-links a { color: #FFFFFF; }
+    .theme-sophisticated-allure.scheme-3 .nav-links a:hover,
+    .theme-sophisticated-allure.scheme-3 a { color: #FF69B4; }
+    .theme-sophisticated-allure.scheme-3 .typography-demo blockquote { border-color: #FF69B4; }
+    .theme-sophisticated-allure.scheme-3 .footer-links a { color: #FFFFFF; }
+    .theme-sophisticated-allure.scheme-3 .footer-links a:hover { color: #FF69B4; }
 
-    .theme-original-passionate-elegance.scheme-3 .button--primary { background-color: #D32F2F; color: #FFFFFF; }
-    .theme-original-passionate-elegance.scheme-3 .button--secondary { background-color: #424242; color: #E0E0E0; }
-    .theme-original-passionate-elegance.scheme-3 .button--outline { background-color: transparent; border: 1px solid #D32F2F; color: #D32F2F; }
-    .theme-original-passionate-elegance.scheme-3 .product-card { background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(255,255,255,0.05); padding: 20px; }
-    .theme-original-passionate-elegance.scheme-3 .container { background-color: #F5F5F5; }
-    .theme-original-passionate-elegance.scheme-3 .nav-links a { color: #E0E0E0; }
-    .theme-original-passionate-elegance.scheme-3 .nav-links a:hover { color: #D32F2F; }
-    .theme-original-passionate-elegance.scheme-3 .typography-demo blockquote { border-color: #D32F2F; }
-    .theme-original-passionate-elegance.scheme-3 a { color: #D32F2F; }
-
-    /* Original Playful Seduction */
-    .theme-original-playful-seduction {
-      font-family: 'Lato', sans-serif;
-      font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+    /* Playful Passion */
+    .theme-playful-passion {
+      font-family: 'Nunito', sans-serif;
+      font-size: clamp(1rem, 2.2vw, 1.3rem);
       font-weight: 400;
-      letter-spacing: 0.01em;
+      letter-spacing: 0.02em;
       line-height: 1.6;
     }
 
-    .theme-original-playful-seduction h1, .theme-original-playful-seduction h2, .theme-original-playful-seduction h3, .theme-original-playful-seduction h4, .theme-original-playful-seduction h5, .theme-original-playful-seduction h6 {
-      font-family: 'Great Vibes', cursive;
-      letter-spacing: 0.1em;
+    .theme-playful-passion h1, .theme-playful-passion h2,
+    .theme-playful-passion h3, .theme-playful-passion h4,
+    .theme-playful-passion h5, .theme-playful-passion h6 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.01em;
       line-height: 1.3;
     }
 
-    .theme-original-playful-seduction h1 { font-size: clamp(2.3rem, 4.5vw, 4rem); font-weight: 400; }
-    .theme-original-playful-seduction h2 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 400; }
-    .theme-original-playful-seduction h3 { font-size: clamp(1.8rem, 3.5vw, 3rem); font-weight: 400; }
-    .theme-original-playful-seduction h4 { font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 400; }
-    .theme-original-playful-seduction h5 { font-size: clamp(1.2rem, 2.5vw, 2rem); font-weight: 400; }
-    .theme-original-playful-seduction h6 { font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 400; }
+    .theme-playful-passion h1 { font-size: clamp(2rem, 4.5vw, 3.5rem); }
+    .theme-playful-passion h2 { font-size: clamp(1.8rem, 4.05vw, 3.15rem); }
+    .theme-playful-passion h3 { font-size: clamp(1.6rem, 3.6vw, 2.8rem); }
+    .theme-playful-passion h4 { font-size: clamp(1.4rem, 3.15vw, 2.45rem); }
+    .theme-playful-passion h5 { font-size: clamp(1.2rem, 2.7vw, 2.1rem); }
+    .theme-playful-passion h6 { font-size: clamp(1rem, 2.25vw, 1.75rem); }
 
-    .theme-original-playful-seduction.scheme-1 {
-      background-color: #FCE4EC;
-      color: #4A4A4A;
+    .theme-playful-passion.scheme-1 {
+      background: #FFFFFF;
+      color: #333333;
     }
 
-    .theme-original-playful-seduction.scheme-1 .button--primary { background-color: #C2185B; color: #FFFFFF; }
-    .theme-original-playful-seduction.scheme-1 .button--secondary { background-color: #9E9E9E; color: #FFFFFF; }
-    .theme-original-playful-seduction.scheme-1 .button--outline { background-color: transparent; border: 1px solid #C2185B; color: #C2185B; }
-    .theme-original-playful-seduction.scheme-1 .product-card { background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); padding: 20px; }
-    .theme-original-playful-seduction.scheme-1 .container { background-color: #F5F5F5; }
-    .theme-original-playful-seduction.scheme-1 .nav-links a { color: #4A4A4A; }
-    .theme-original-playful-seduction.scheme-1 .nav-links a:hover { color: #C2185B; }
-    .theme-original-playful-seduction.scheme-1 .typography-demo blockquote { border-color: #C2185B; }
-    .theme-original-playful-seduction.scheme-1 a { color: #C2185B; }
+    .theme-playful-passion.scheme-1 .container {
+      background: #FFFFFF;
+      margin: clamp(1.5rem, 6vw, 4rem);
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      border: 0;
+      border-radius: 8px;
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.05);
+    }
+    .theme-playful-passion.scheme-1 .product-card {
+      background: #FFFFFF;
+      border: 0;
+      border-radius: 12px;
+      box-shadow: 4px 6px 15px rgba(0,0,0,0.1);
+    }
+    .theme-playful-passion.scheme-1 .button--primary {
+      background: #FF69B4;
+      color: #FFFFFF;
+    }
+    .theme-playful-passion.scheme-1 .button--secondary {
+      background: #FCE4EC;
+      color: #FF69B4;
+    }
+    .theme-playful-passion.scheme-1 .button--outline {
+      background: transparent;
+      border: 1px solid #FF69B4;
+      color: #FF69B4;
+    }
+    .theme-playful-passion.scheme-1 .nav-links a { color: #333333; }
+    .theme-playful-passion.scheme-1 .nav-links a:hover,
+    .theme-playful-passion.scheme-1 a { color: #FF69B4; }
+    .theme-playful-passion.scheme-1 .typography-demo blockquote { border-color: #FF69B4; }
+    .theme-playful-passion.scheme-1 .footer-links a { color: #333333; }
+    .theme-playful-passion.scheme-1 .footer-links a:hover { color: #FF69B4; }
 
-    .theme-original-playful-seduction.scheme-2 {
-      background-color: #C2185B;
+    .theme-playful-passion.scheme-2 {
+      background: #F0F0F0;
+      color: #444444;
+    }
+
+    .theme-playful-passion.scheme-2 .container {
+      background: #FFFFFF;
+      margin: clamp(1.5rem, 6vw, 4rem);
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      border: 0;
+      border-radius: 8px;
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.05);
+    }
+    .theme-playful-passion.scheme-2 .product-card {
+      background: #FFFFFF;
+      border: 0;
+      border-radius: 12px;
+      box-shadow: 4px 6px 15px rgba(0,0,0,0.1);
+    }
+    .theme-playful-passion.scheme-2 .button--primary {
+      background: #C90084;
+      color: #FFFFFF;
+    }
+    .theme-playful-passion.scheme-2 .button--secondary {
+      background: #E0BBE4;
+      color: #C90084;
+    }
+    .theme-playful-passion.scheme-2 .button--outline {
+      background: transparent;
+      border: 1px solid #C90084;
+      color: #C90084;
+    }
+    .theme-playful-passion.scheme-2 .nav-links a { color: #444444; }
+    .theme-playful-passion.scheme-2 .nav-links a:hover,
+    .theme-playful-passion.scheme-2 a { color: #C90084; }
+    .theme-playful-passion.scheme-2 .typography-demo blockquote { border-color: #C90084; }
+    .theme-playful-passion.scheme-2 .footer-links a { color: #444444; }
+    .theme-playful-passion.scheme-2 .footer-links a:hover { color: #C90084; }
+
+    .theme-playful-passion.scheme-3 {
+      background: #1A1A1A;
       color: #FFFFFF;
     }
 
-    .theme-original-playful-seduction.scheme-2 .button--primary { background-color: #4A4A4A; color: #FFFFFF; }
-    .theme-original-playful-seduction.scheme-2 .button--secondary { background-color: #757575; color: #FFFFFF; }
-    .theme-original-playful-seduction.scheme-2 .button--outline { background-color: transparent; border: 1px solid #FFFFFF; color: #FFFFFF; }
-    .theme-original-playful-seduction.scheme-2 .product-card { background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(255,255,255,0.1); padding: 20px; }
-    .theme-original-playful-seduction.scheme-2 .container { background-color: #F5F5F5; }
-    .theme-original-playful-seduction.scheme-2 .nav-links a { color: #FFFFFF; }
-    .theme-original-playful-seduction.scheme-2 .nav-links a:hover { color: #4A4A4A; }
-    .theme-original-playful-seduction.scheme-2 .typography-demo blockquote { border-color: #FFFFFF; }
-    .theme-original-playful-seduction.scheme-2 a { color: #FFFFFF; }
-
-    .theme-original-playful-seduction.scheme-3 {
-      background-color: #212121;
-      color: #E0E0E0;
+    .theme-playful-passion.scheme-3 .container {
+      background: #FFFFFF;
+      margin: clamp(1.5rem, 6vw, 4rem);
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      border: 0;
+      border-radius: 8px;
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.05);
     }
-
-    .theme-original-playful-seduction.scheme-3 .button--primary { background-color: #C2185B; color: #FFFFFF; }
-    .theme-original-playful-seduction.scheme-3 .button--secondary { background-color: #424242; color: #E0E0E0; }
-    .theme-original-playful-seduction.scheme-3 .button--outline { background-color: transparent; border: 1px solid #C2185B; color: #C2185B; }
-    .theme-original-playful-seduction.scheme-3 .product-card { background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(255,255,255,0.05); padding: 20px; }
-    .theme-original-playful-seduction.scheme-3 .container { background-color: #F5F5F5; }
-    .theme-original-playful-seduction.scheme-3 .nav-links a { color: #E0E0E0; }
-    .theme-original-playful-seduction.scheme-3 .nav-links a:hover { color: #C2185B; }
-    .theme-original-playful-seduction.scheme-3 .typography-demo blockquote { border-color: #C2185B; }
-    .theme-original-playful-seduction.scheme-3 a { color: #C2185B; }
-
-    /* Original Luxurious Mystery */
-    .theme-original-luxurious-mystery {
-      font-family: 'Montserrat', sans-serif;
-      font-size: clamp(0.85rem, 1.4vw, 1rem);
-      font-weight: 400;
-      letter-spacing: 0.02em;
-      line-height: 1.5;
+    .theme-playful-passion.scheme-3 .product-card {
+      background: #FFFFFF;
+      border: 0;
+      border-radius: 12px;
+      box-shadow: 4px 6px 15px rgba(0,0,0,0.15);
     }
-
-    .theme-original-luxurious-mystery h1, .theme-original-luxurious-mystery h2, .theme-original-luxurious-mystery h3, .theme-original-luxurious-mystery h4, .theme-original-luxurious-mystery h5, .theme-original-luxurious-mystery h6 {
-      font-family: 'Cinzel', serif;
-      letter-spacing: 0.08em;
-      line-height: 1.2;
+    .theme-playful-passion.scheme-3 .button--primary {
+      background: #FFC0CB;
+      color: #1A1A1A;
     }
-
-    .theme-original-luxurious-mystery h1 { font-size: clamp(2.1rem, 4vw, 3.7rem); font-weight: 700; }
-    .theme-original-luxurious-mystery h2 { font-size: clamp(1.9rem, 3.5vw, 3.2rem); font-weight: 700; }
-    .theme-original-luxurious-mystery h3 { font-size: clamp(1.7rem, 3vw, 2.7rem); font-weight: 700; }
-    .theme-original-luxurious-mystery h4 { font-size: clamp(1.4rem, 2.5vw, 2.2rem); font-weight: 700; }
-    .theme-original-luxurious-mystery h5 { font-size: clamp(1.1rem, 2vw, 1.7rem); font-weight: 700; }
-    .theme-original-luxurious-mystery h6 { font-size: clamp(0.9rem, 1.5vw, 1.2rem); font-weight: 700; }
-
-    .theme-original-luxurious-mystery.scheme-1 {
-      background-color: #FAFAFA;
-      color: #212121;
-    }
-
-    .theme-original-luxurious-mystery.scheme-1 .button--primary { background-color: #6A1B9A; color: #FFFFFF; }
-    .theme-original-luxurious-mystery.scheme-1 .button--secondary { background-color: #BDBDBD; color: #212121; }
-    .theme-original-luxurious-mystery.scheme-1 .button--outline { background-color: transparent; border: 1px solid #6A1B9A; color: #6A1B9A; }
-    .theme-original-luxurious-mystery.scheme-1 .product-card { background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0.3rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); padding: 20px; }
-    .theme-original-luxurious-mystery.scheme-1 .container { background-color: #F5F5F5; }
-    .theme-original-luxurious-mystery.scheme-1 .nav-links a { color: #212121; }
-    .theme-original-luxurious-mystery.scheme-1 .nav-links a:hover { color: #6A1B9A; }
-    .theme-original-luxurious-mystery.scheme-1 .typography-demo blockquote { border-color: #6A1B9A; }
-    .theme-original-luxurious-mystery.scheme-1 a { color: #6A1B9A; }
-
-    .theme-original-luxurious-mystery.scheme-2 {
-      background-color: #6A1B9A;
+    .theme-playful-passion.scheme-3 .button--secondary {
+      background: #333333;
       color: #FFFFFF;
     }
-
-    .theme-original-luxurious-mystery.scheme-2 .button--primary { background-color: #212121; color: #FFFFFF; }
-    .theme-original-luxurious-mystery.scheme-2 .button--secondary { background-color: #424242; color: #FFFFFF; }
-    .theme-original-luxurious-mystery.scheme-2 .button--outline { background-color: transparent; border: 1px solid #FFFFFF; color: #FFFFFF; }
-    .theme-original-luxurious-mystery.scheme-2 .product-card { background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0.3rem; box-shadow: 0 1px 3px rgba(255,255,255,0.15); padding: 20px; }
-    .theme-original-luxurious-mystery.scheme-2 .container { background-color: #F5F5F5; }
-    .theme-original-luxurious-mystery.scheme-2 .nav-links a { color: #FFFFFF; }
-    .theme-original-luxurious-mystery.scheme-2 .nav-links a:hover { color: #212121; }
-    .theme-original-luxurious-mystery.scheme-2 .typography-demo blockquote { border-color: #FFFFFF; }
-    .theme-original-luxurious-mystery.scheme-2 a { color: #FFFFFF; }
-
-    .theme-original-luxurious-mystery.scheme-3 {
-      background-color: #000000;
-      color: #E0E0E0;
+    .theme-playful-passion.scheme-3 .button--outline {
+      background: transparent;
+      border: 1px solid #FFC0CB;
+      color: #FFC0CB;
     }
+    .theme-playful-passion.scheme-3 .nav-links a { color: #FFFFFF; }
+    .theme-playful-passion.scheme-3 .nav-links a:hover,
+    .theme-playful-passion.scheme-3 a { color: #FFC0CB; }
+    .theme-playful-passion.scheme-3 .typography-demo blockquote { border-color: #FFC0CB; }
+    .theme-playful-passion.scheme-3 .footer-links a { color: #FFFFFF; }
+    .theme-playful-passion.scheme-3 .footer-links a:hover { color: #FFC0CB; }
 
-    .theme-original-luxurious-mystery.scheme-3 .button--primary { background-color: #6A1B9A; color: #FFFFFF; }
-    .theme-original-luxurious-mystery.scheme-3 .button--secondary { background-color: #333333; color: #E0E0E0; }
-    .theme-original-luxurious-mystery.scheme-3 .button--outline { background-color: transparent; border: 1px solid #6A1B9A; color: #6A1B9A; }
-    .theme-original-luxurious-mystery.scheme-3 .product-card { background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0.3rem; box-shadow: 0 1px 3px rgba(255,255,255,0.05); padding: 20px; }
-    .theme-original-luxurious-mystery.scheme-3 .container { background-color: #F5F5F5; }
-    .theme-original-luxurious-mystery.scheme-3 .nav-links a { color: #E0E0E0; }
-    .theme-original-luxurious-mystery.scheme-3 .nav-links a:hover { color: #6A1B9A; }
-    .theme-original-luxurious-mystery.scheme-3 .typography-demo blockquote { border-color: #6A1B9A; }
-    .theme-original-luxurious-mystery.scheme-3 a { color: #6A1B9A; }
-
-    /* Original Modern Minimalism */
-    .theme-original-modern-minimalism {
-      font-family: 'Open Sans', sans-serif;
-      font-size: clamp(0.875rem, 1.5vw, 1rem);
+    /* Midnight Mystery */
+    .theme-midnight-mystery {
+      font-family: 'Lora', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
       font-weight: 400;
       letter-spacing: 0.01em;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
-    .theme-original-modern-minimalism h1, .theme-original-modern-minimalism h2, .theme-original-modern-minimalism h3, .theme-original-modern-minimalism h4, .theme-original-modern-minimalism h5, .theme-original-modern-minimalism h6 {
-      font-family: 'Montserrat', sans-serif;
-      letter-spacing: 0.03em;
+    .theme-midnight-mystery h1, .theme-midnight-mystery h2,
+    .theme-midnight-mystery h3, .theme-midnight-mystery h4,
+    .theme-midnight-mystery h5, .theme-midnight-mystery h6 {
+      font-family: 'EB Garamond', serif;
+      font-weight: 500;
+      letter-spacing: -0.03em;
       line-height: 1.1;
     }
 
-    .theme-original-modern-minimalism h1 { font-size: clamp(1.9rem, 3.5vw, 3.3rem); font-weight: 700; }
-    .theme-original-modern-minimalism h2 { font-size: clamp(1.7rem, 3vw, 2.8rem); font-weight: 700; }
-    .theme-original-modern-minimalism h3 { font-size: clamp(1.5rem, 2.5vw, 2.3rem); font-weight: 700; }
-    .theme-original-modern-minimalism h4 { font-size: clamp(1.3rem, 2vw, 1.8rem); font-weight: 700; }
-    .theme-original-modern-minimalism h5 { font-size: clamp(1.1rem, 1.5vw, 1.3rem); font-weight: 700; }
-    .theme-original-modern-minimalism h6 { font-size: clamp(0.9rem, 1vw, 1rem); font-weight: 700; }
+    .theme-midnight-mystery h1 { font-size: clamp(2.8rem, 5.5vw, 4.5rem); }
+    .theme-midnight-mystery h2 { font-size: clamp(2.52rem, 4.95vw, 4.05rem); }
+    .theme-midnight-mystery h3 { font-size: clamp(2.24rem, 4.4vw, 3.6rem); }
+    .theme-midnight-mystery h4 { font-size: clamp(1.96rem, 3.85vw, 3.15rem); }
+    .theme-midnight-mystery h5 { font-size: clamp(1.68rem, 3.3vw, 2.7rem); }
+    .theme-midnight-mystery h6 { font-size: clamp(1.4rem, 2.75vw, 2.25rem); }
 
-    .theme-original-modern-minimalism.scheme-1 {
-      background-color: #FFFFFF;
-      color: #424242;
+    .theme-midnight-mystery.scheme-1 {
+      background: #0A0A0A;
+      color: #D3D3D3;
     }
 
-    .theme-original-modern-minimalism.scheme-1 .button--primary { background-color: #FF5722; color: #FFFFFF; }
-    .theme-original-modern-minimalism.scheme-1 .button--secondary { background-color: #9E9E9E; color: #FFFFFF; }
-    .theme-original-modern-minimalism.scheme-1 .button--outline { background-color: transparent; border: 1px solid #FF5722; color: #FF5722; }
-    .theme-original-modern-minimalism.scheme-1 .product-card { background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0rem; padding: 20px; }
-    .theme-original-modern-minimalism.scheme-1 .container { background-color: #F5F5F5; }
-    .theme-original-modern-minimalism.scheme-1 .nav-links a { color: #424242; }
-    .theme-original-modern-minimalism.scheme-1 .nav-links a:hover { color: #FF5722; }
-    .theme-original-modern-minimalism.scheme-1 .typography-demo blockquote { border-color: #FF5722; }
-    .theme-original-modern-minimalism.scheme-1 a { color: #FF5722; }
+    .theme-midnight-mystery.scheme-1 .container {
+      background: #1A1A1A;
+      margin: clamp(1rem, 4vw, 2.5rem);
+      padding: clamp(1rem, 3vw, 2rem);
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .theme-midnight-mystery.scheme-1 .product-card {
+      background: #1A1A1A;
+      border: 0;
+      border-radius: 6px;
+      box-shadow: 3px 5px 12px rgba(255,255,255,0.2);
+    }
+    .theme-midnight-mystery.scheme-1 .button--primary {
+      background: #C90084;
+      color: #FFFFFF;
+    }
+    .theme-midnight-mystery.scheme-1 .button--secondary {
+      background: #333333;
+      color: #C90084;
+    }
+    .theme-midnight-mystery.scheme-1 .button--outline {
+      background: transparent;
+      border: 1px solid #C90084;
+      color: #C90084;
+    }
+    .theme-midnight-mystery.scheme-1 .nav-links a { color: #D3D3D3; }
+    .theme-midnight-mystery.scheme-1 .nav-links a:hover,
+    .theme-midnight-mystery.scheme-1 a { color: #C90084; }
+    .theme-midnight-mystery.scheme-1 .typography-demo blockquote { border-color: #C90084; }
+    .theme-midnight-mystery.scheme-1 .footer-links a { color: #D3D3D3; }
+    .theme-midnight-mystery.scheme-1 .footer-links a:hover { color: #C90084; }
 
-    .theme-original-modern-minimalism.scheme-2 {
-      background-color: #FF5722;
+    .theme-midnight-mystery.scheme-2 {
+      background: #1A1A1A;
       color: #FFFFFF;
     }
 
-    .theme-original-modern-minimalism.scheme-2 .button--primary { background-color: #424242; color: #FFFFFF; }
-    .theme-original-modern-minimalism.scheme-2 .button--secondary { background-color: #757575; color: #FFFFFF; }
-    .theme-original-modern-minimalism.scheme-2 .button--outline { background-color: transparent; border: 1px solid #FFFFFF; color: #FFFFFF; }
-    .theme-original-modern-minimalism.scheme-2 .product-card { background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0rem; padding: 20px; }
-    .theme-original-modern-minimalism.scheme-2 .container { background-color: #F5F5F5; }
-    .theme-original-modern-minimalism.scheme-2 .nav-links a { color: #FFFFFF; }
-    .theme-original-modern-minimalism.scheme-2 .nav-links a:hover { color: #424242; }
-    .theme-original-modern-minimalism.scheme-2 .typography-demo blockquote { border-color: #FFFFFF; }
-    .theme-original-modern-minimalism.scheme-2 a { color: #FFFFFF; }
-
-    .theme-original-modern-minimalism.scheme-3 {
-      background-color: #121212;
-      color: #E0E0E0;
+    .theme-midnight-mystery.scheme-2 .container {
+      background: #1A1A1A;
+      margin: clamp(1rem, 4vw, 2.5rem);
+      padding: clamp(1rem, 3vw, 2rem);
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
     }
-
-    .theme-original-modern-minimalism.scheme-3 .button--primary { background-color: #FF5722; color: #FFFFFF; }
-    .theme-original-modern-minimalism.scheme-3 .button--secondary { background-color: #424242; color: #E0E0E0; }
-    .theme-original-modern-minimalism.scheme-3 .button--outline { background-color: transparent; border: 1px solid #FF5722; color: #FF5722; }
-    .theme-original-modern-minimalism.scheme-3 .product-card { background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0rem; padding: 20px; }
-    .theme-original-modern-minimalism.scheme-3 .container { background-color: #F5F5F5; }
-    .theme-original-modern-minimalism.scheme-3 .nav-links a { color: #E0E0E0; }
-    .theme-original-modern-minimalism.scheme-3 .nav-links a:hover { color: #FF5722; }
-    .theme-original-modern-minimalism.scheme-3 .typography-demo blockquote { border-color: #FF5722; }
-    .theme-original-modern-minimalism.scheme-3 a { color: #FF5722; }
-
-    /* Original Classic Romance */
-    .theme-original-classic-romance {
-      font-family: 'Roboto', sans-serif;
-      font-size: clamp(0.875rem, 1.5vw, 1rem);
-      font-weight: 400;
-      letter-spacing: 0.015em;
-      line-height: 1.5;
+    .theme-midnight-mystery.scheme-2 .product-card {
+      background: #1A1A1A;
+      border: 0;
+      border-radius: 6px;
+      box-shadow: 3px 5px 12px rgba(255,255,255,0.2);
     }
-
-    .theme-original-classic-romance h1, .theme-original-classic-romance h2, .theme-original-classic-romance h3, .theme-original-classic-romance h4, .theme-original-classic-romance h5, .theme-original-classic-romance h6 {
-      font-family: 'Lora', serif;
-      letter-spacing: 0.04em;
-      line-height: 1.2;
+    .theme-midnight-mystery.scheme-2 .button--primary {
+      background: #FF69B4;
+      color: #0A0A0A;
     }
-
-    .theme-original-classic-romance h1 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; }
-    .theme-original-classic-romance h2 { font-size: clamp(1.75rem, 3.5vw, 3rem); font-weight: 700; }
-    .theme-original-classic-romance h3 { font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 700; }
-    .theme-original-classic-romance h4 { font-size: clamp(1.25rem, 2.5vw, 2rem); font-weight: 700; }
-    .theme-original-classic-romance h5 { font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 700; }
-    .theme-original-classic-romance h6 { font-size: clamp(0.875rem, 1.5vw, 1.25rem); font-weight: 700; }
-
-    .theme-original-classic-romance.scheme-1 {
-      background-color: #FDFDFD;
-      color: #333333;
+    .theme-midnight-mystery.scheme-2 .button--secondary {
+      background: #444444;
+      color: #FFFFFF;
     }
+    .theme-midnight-mystery.scheme-2 .button--outline {
+      background: transparent;
+      border: 1px solid #FF69B4;
+      color: #FF69B4;
+    }
+    .theme-midnight-mystery.scheme-2 .nav-links a { color: #FFFFFF; }
+    .theme-midnight-mystery.scheme-2 .nav-links a:hover,
+    .theme-midnight-mystery.scheme-2 a { color: #FF69B4; }
+    .theme-midnight-mystery.scheme-2 .typography-demo blockquote { border-color: #FF69B4; }
+    .theme-midnight-mystery.scheme-2 .footer-links a { color: #FFFFFF; }
+    .theme-midnight-mystery.scheme-2 .footer-links a:hover { color: #FF69B4; }
 
-    .theme-original-classic-romance.scheme-1 .button--primary { background-color: #AD1457; color: #FFFFFF; }
-    .theme-original-classic-romance.scheme-1 .button--secondary { background-color: #757575; color: #FFFFFF; }
-    .theme-original-classic-romance.scheme-1 .button--outline { background-color: transparent; border: 1px solid #AD1457; color: #AD1457; }
-    .theme-original-classic-romance.scheme-1 .product-card { background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 20px; }
-    .theme-original-classic-romance.scheme-1 .container { background-color: #F5F5F5; }
-    .theme-original-classic-romance.scheme-1 .nav-links a { color: #333333; }
-    .theme-original-classic-romance.scheme-1 .nav-links a:hover { color: #AD1457; }
-    .theme-original-classic-romance.scheme-1 .typography-demo blockquote { border-color: #AD1457; }
-    .theme-original-classic-romance.scheme-1 a { color: #AD1457; }
-
-    .theme-original-classic-romance.scheme-2 {
-      background-color: #AD1457;
+    .theme-midnight-mystery.scheme-3 {
+      background: linear-gradient(180deg, #0A0A0A 0%, #45072F 100%);
       color: #FFFFFF;
     }
 
-    .theme-original-classic-romance.scheme-2 .button--primary { background-color: #333333; color: #FFFFFF; }
-    .theme-original-classic-romance.scheme-2 .button--secondary { background-color: #424242; color: #FFFFFF; }
-    .theme-original-classic-romance.scheme-2 .button--outline { background-color: transparent; border: 1px solid #FFFFFF; color: #FFFFFF; }
-    .theme-original-classic-romance.scheme-2 .product-card { background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(255,255,255,0.2); padding: 20px; }
-    .theme-original-classic-romance.scheme-2 .container { background-color: #F5F5F5; }
-    .theme-original-classic-romance.scheme-2 .nav-links a { color: #FFFFFF; }
-    .theme-original-classic-romance.scheme-2 .nav-links a:hover { color: #333333; }
-    .theme-original-classic-romance.scheme-2 .typography-demo blockquote { border-color: #FFFFFF; }
-    .theme-original-classic-romance.scheme-2 a { color: #FFFFFF; }
-
-    .theme-original-classic-romance.scheme-3 {
-      background-color: #1A1A1A;
-      color: #E0E0E0;
+    .theme-midnight-mystery.scheme-3 .container {
+      background: #1A1A1A;
+      margin: clamp(1rem, 4vw, 2.5rem);
+      padding: clamp(1rem, 3vw, 2rem);
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
     }
-
-    .theme-original-classic-romance.scheme-3 .button--primary { background-color: #AD1457; color: #FFFFFF; }
-    .theme-original-classic-romance.scheme-3 .button--secondary { background-color: #333333; color: #E0E0E0; }
-    .theme-original-classic-romance.scheme-3 .button--outline { background-color: transparent; border: 1px solid #AD1457; color: #AD1457; }
-    .theme-original-classic-romance.scheme-3 .product-card { background-color: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(255,255,255,0.05); padding: 20px; }
-    .theme-original-classic-romance.scheme-3 .container { background-color: #F5F5F5; }
-    .theme-original-classic-romance.scheme-3 .nav-links a { color: #E0E0E0; }
-    .theme-original-classic-romance.scheme-3 .nav-links a:hover { color: #AD1457; }
-    .theme-original-classic-romance.scheme-3 .typography-demo blockquote { border-color: #AD1457; }
-    .theme-original-classic-romance.scheme-3 a { color: #AD1457; }
-
-    /* Passionate Elegance */
-    .theme-passionate-elegance {
-      font-family: 'Montserrat', sans-serif;
-      font-size: clamp(1rem, 0.85rem + 0.5vw, 1.25rem);
-      font-weight: 400;
-      letter-spacing: 0.01em;
-      line-height: 1.6;
+    .theme-midnight-mystery.scheme-3 .product-card {
+      background: #1A1A1A;
+      border: 0;
+      border-radius: 6px;
+      box-shadow: 3px 5px 12px rgba(255,255,255,0.1);
     }
-
-    .theme-passionate-elegance h1, .theme-passionate-elegance h2, .theme-passionate-elegance h3, .theme-passionate-elegance h4, .theme-passionate-elegance h5, .theme-passionate-elegance h6 {
-      font-family: 'Cormorant Garamond', serif;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-    }
-
-    .theme-passionate-elegance h1 { font-size: clamp(1.5rem, 1rem + 2vw, 3rem); font-weight: 600; }
-    .theme-passionate-elegance h2 { font-size: clamp(1.35rem, 0.9rem + 1.8vw, 2.7rem); font-weight: 600; }
-    .theme-passionate-elegance h3 { font-size: clamp(1.2rem, 0.8rem + 1.6vw, 2.4rem); font-weight: 500; }
-    .theme-passionate-elegance h4 { font-size: clamp(1.05rem, 0.7rem + 1.4vw, 2.1rem); font-weight: 500; }
-    .theme-passionate-elegance h5 { font-size: clamp(0.9rem, 0.6rem + 1.2vw, 1.8rem); font-weight: 500; }
-    .theme-passionate-elegance h6 { font-size: clamp(0.75rem, 0.5rem + 1vw, 1.5rem); font-weight: 500; }
-
-    .theme-passionate-elegance.scheme-1 {
-      background: linear-gradient(135deg, #121212 0%, #252525 100%);
-      color: #F8F8F8;
-    }
-
-    .theme-passionate-elegance.scheme-1 .button--primary { background-color: #D81B60; color: #FFFFFF; }
-    .theme-passionate-elegance.scheme-1 .button--secondary { background-color: #9C27B0; color: #FFFFFF; }
-    .theme-passionate-elegance.scheme-1 .button--outline { background-color: transparent; border: 1px solid #D81B60; color: #D81B60; }
-    .theme-passionate-elegance.scheme-1 .product-card { background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2); padding: 20px; }
-    .theme-passionate-elegance.scheme-1 .container { background-color: rgba(0, 0, 0, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); }
-    .theme-passionate-elegance.scheme-1 .nav-links a { color: #F8F8F8; }
-    .theme-passionate-elegance.scheme-1 .nav-links a:hover { color: #D81B60; }
-    .theme-passionate-elegance.scheme-1 .typography-demo blockquote { border-color: #D81B60; }
-    .theme-passionate-elegance.scheme-1 a { color: #D81B60; }
-
-    .theme-passionate-elegance.scheme-2 {
-      background: linear-gradient(135deg, #FFF5F8 0%, #FFFFFF 100%);
-      color: #333333;
-    }
-
-    .theme-passionate-elegance.scheme-2 .button--primary { background-color: #FF4081; color: #FFFFFF; }
-    .theme-passionate-elegance.scheme-2 .button--secondary { background-color: #9C27B0; color: #FFFFFF; }
-    .theme-passionate-elegance.scheme-2 .button--outline { background-color: transparent; border: 1px solid #FF4081; color: #FF4081; }
-    .theme-passionate-elegance.scheme-2 .product-card { background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1); padding: 20px; }
-    .theme-passionate-elegance.scheme-2 .container { background-color: rgba(0, 0, 0, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); }
-    .theme-passionate-elegance.scheme-2 .nav-links a { color: #333333; }
-    .theme-passionate-elegance.scheme-2 .nav-links a:hover { color: #FF4081; }
-    .theme-passionate-elegance.scheme-2 .typography-demo blockquote { border-color: #FF4081; }
-    .theme-passionate-elegance.scheme-2 a { color: #FF4081; }
-
-    .theme-passionate-elegance.scheme-3 {
-      background: linear-gradient(135deg, #0A0A0A 0%, #1E1E1E 100%);
+    .theme-midnight-mystery.scheme-3 .button--primary {
+      background: #45072F;
       color: #FFFFFF;
     }
+    .theme-midnight-mystery.scheme-3 .button--secondary {
+      background: #333333;
+      color: #FFFFFF;
+    }
+    .theme-midnight-mystery.scheme-3 .button--outline {
+      background: transparent;
+      border: 1px solid #45072F;
+      color: #45072F;
+    }
+    .theme-midnight-mystery.scheme-3 .nav-links a { color: #FFFFFF; }
+    .theme-midnight-mystery.scheme-3 .nav-links a:hover,
+    .theme-midnight-mystery.scheme-3 a { color: #45072F; }
+    .theme-midnight-mystery.scheme-3 .typography-demo blockquote { border-color: #45072F; }
+    .theme-midnight-mystery.scheme-3 .footer-links a { color: #FFFFFF; }
+    .theme-midnight-mystery.scheme-3 .footer-links a:hover { color: #45072F; }
 
-    .theme-passionate-elegance.scheme-3 .button--primary { background-color: #7B1FA2; color: #FFFFFF; }
-    .theme-passionate-elegance.scheme-3 .button--secondary { background-color: #C2185B; color: #FFFFFF; }
-    .theme-passionate-elegance.scheme-3 .button--outline { background-color: transparent; border: 1px solid #7B1FA2; color: #7B1FA2; }
-    .theme-passionate-elegance.scheme-3 .product-card { background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3); padding: 20px; }
-    .theme-passionate-elegance.scheme-3 .container { background-color: rgba(0, 0, 0, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); }
-    .theme-passionate-elegance.scheme-3 .nav-links a { color: #FFFFFF; }
-    .theme-passionate-elegance.scheme-3 .nav-links a:hover { color: #7B1FA2; }
-    .theme-passionate-elegance.scheme-3 .typography-demo blockquote { border-color: #7B1FA2; }
-    .theme-passionate-elegance.scheme-3 a { color: #7B1FA2; }
-
-    /* Playful Luxury */
-    .theme-playful-luxury {
+    /* Warm Embrace */
+    .theme-warm-embrace {
       font-family: 'Source Sans Pro', sans-serif;
-      font-size: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
-      font-weight: 400;
-      letter-spacing: 0.01em;
-      line-height: 1.5;
-    }
-
-    .theme-playful-luxury h1, .theme-playful-luxury h2, .theme-playful-luxury h3, .theme-playful-luxury h4, .theme-playful-luxury h5, .theme-playful-luxury h6 {
-      font-family: 'Playfair Display', serif;
-      letter-spacing: -0.015em;
-      line-height: 1.3;
-    }
-
-    .theme-playful-luxury h1 { font-size: clamp(1.75rem, 1.2rem + 2vw, 3.5rem); font-weight: 700; }
-    .theme-playful-luxury h2 { font-size: clamp(1.575rem, 1.08rem + 1.8vw, 3.15rem); font-weight: 700; }
-    .theme-playful-luxury h3 { font-size: clamp(1.4rem, 0.96rem + 1.6vw, 2.8rem); font-weight: 600; }
-    .theme-playful-luxury h4 { font-size: clamp(1.225rem, 0.84rem + 1.4vw, 2.45rem); font-weight: 600; }
-    .theme-playful-luxury h5 { font-size: clamp(1.05rem, 0.72rem + 1.2vw, 2.1rem); font-weight: 600; }
-    .theme-playful-luxury h6 { font-size: clamp(0.875rem, 0.6rem + 1vw, 1.75rem); font-weight: 600; }
-
-    .theme-playful-luxury.scheme-1 {
-      background: linear-gradient(135deg, #2C0A37 0%, #4A154B 100%);
-      color: #F8F8F8;
-    }
-
-    .theme-playful-luxury.scheme-1 .button--primary { background-color: #E91E63; color: #FFFFFF; }
-    .theme-playful-luxury.scheme-1 .button--secondary { background-color: #FF9800; color: #212121; }
-    .theme-playful-luxury.scheme-1 .button--outline { background-color: transparent; border: 1px solid #E91E63; color: #E91E63; }
-    .theme-playful-luxury.scheme-1 .product-card { background-color: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); padding: 20px; }
-    .theme-playful-luxury.scheme-1 .container { background-color: rgba(0, 0, 0, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 16px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18); }
-    .theme-playful-luxury.scheme-1 .nav-links a { color: #F8F8F8; }
-    .theme-playful-luxury.scheme-1 .nav-links a:hover { color: #E91E63; }
-    .theme-playful-luxury.scheme-1 .typography-demo blockquote { border-color: #E91E63; }
-    .theme-playful-luxury.scheme-1 a { color: #E91E63; }
-
-    .theme-playful-luxury.scheme-2 {
-      background: linear-gradient(135deg, #FFFAF0 0%, #FFFFFF 100%);
-      color: #333333;
-    }
-
-    .theme-playful-luxury.scheme-2 .button--primary { background-color: #D4AF37; color: #212121; }
-    .theme-playful-luxury.scheme-2 .button--secondary { background-color: #9C27B0; color: #FFFFFF; }
-    .theme-playful-luxury.scheme-2 .button--outline { background-color: transparent; border: 1px solid #D4AF37; color: #D4AF37; }
-    .theme-playful-luxury.scheme-2 .product-card { background-color: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); padding: 20px; }
-    .theme-playful-luxury.scheme-2 .container { background-color: rgba(0, 0, 0, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 16px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18); }
-    .theme-playful-luxury.scheme-2 .nav-links a { color: #333333; }
-    .theme-playful-luxury.scheme-2 .nav-links a:hover { color: #D4AF37; }
-    .theme-playful-luxury.scheme-2 .typography-demo blockquote { border-color: #D4AF37; }
-    .theme-playful-luxury.scheme-2 a { color: #D4AF37; }
-
-    .theme-playful-luxury.scheme-3 {
-      background: linear-gradient(135deg, #FFF0F5 0%, #FFFFFF 100%);
-      color: #333333;
-    }
-
-    .theme-playful-luxury.scheme-3 .button--primary { background-color: #FF1493; color: #FFFFFF; }
-    .theme-playful-luxury.scheme-3 .button--secondary { background-color: #8E44AD; color: #FFFFFF; }
-    .theme-playful-luxury.scheme-3 .button--outline { background-color: transparent; border: 1px solid #FF1493; color: #FF1493; }
-    .theme-playful-luxury.scheme-3 .product-card { background-color: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); padding: 20px; }
-    .theme-playful-luxury.scheme-3 .container { background-color: rgba(0, 0, 0, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 16px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18); }
-    .theme-playful-luxury.scheme-3 .nav-links a { color: #333333; }
-    .theme-playful-luxury.scheme-3 .nav-links a:hover { color: #FF1493; }
-    .theme-playful-luxury.scheme-3 .typography-demo blockquote { border-color: #FF1493; }
-    .theme-playful-luxury.scheme-3 a { color: #FF1493; }
-
-    /* Intimate Warmth */
-    .theme-intimate-warmth {
-      font-family: 'Lato', sans-serif;
-      font-size: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
+      font-size: clamp(1rem, 2.1vw, 1.25rem);
       font-weight: 400;
       letter-spacing: 0.015em;
-      line-height: 1.6;
+      line-height: 1.55;
     }
 
-    .theme-intimate-warmth h1, .theme-intimate-warmth h2, .theme-intimate-warmth h3, .theme-intimate-warmth h4, .theme-intimate-warmth h5, .theme-intimate-warmth h6 {
-      font-family: 'Libre Baskerville', serif;
-      letter-spacing: -0.01em;
+    .theme-warm-embrace h1, .theme-warm-embrace h2,
+    .theme-warm-embrace h3, .theme-warm-embrace h4,
+    .theme-warm-embrace h5, .theme-warm-embrace h6 {
+      font-family: 'Merriweather', serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
       line-height: 1.25;
     }
 
-    .theme-intimate-warmth h1 { font-size: clamp(1.5rem, 1.1rem + 1.8vw, 3rem); font-weight: 700; }
-    .theme-intimate-warmth h2 { font-size: clamp(1.35rem, 0.99rem + 1.62vw, 2.7rem); font-weight: 700; }
-    .theme-intimate-warmth h3 { font-size: clamp(1.2rem, 0.88rem + 1.44vw, 2.4rem); font-weight: 700; }
-    .theme-intimate-warmth h4 { font-size: clamp(1.05rem, 0.77rem + 1.26vw, 2.1rem); font-weight: 400; }
-    .theme-intimate-warmth h5 { font-size: clamp(0.9rem, 0.66rem + 1.08vw, 1.8rem); font-weight: 400; }
-    .theme-intimate-warmth h6 { font-size: clamp(0.75rem, 0.55rem + 0.9vw, 1.5rem); font-weight: 400; }
+    .theme-warm-embrace h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); }
+    .theme-warm-embrace h2 { font-size: clamp(1.98rem, 4.5vw, 3.42rem); }
+    .theme-warm-embrace h3 { font-size: clamp(1.76rem, 4vw, 3.04rem); }
+    .theme-warm-embrace h4 { font-size: clamp(1.54rem, 3.5vw, 2.66rem); }
+    .theme-warm-embrace h5 { font-size: clamp(1.32rem, 3vw, 2.28rem); }
+    .theme-warm-embrace h6 { font-size: clamp(1.1rem, 2.5vw, 1.9rem); }
 
-    .theme-intimate-warmth.scheme-1 {
-      background: linear-gradient(135deg, #FFF8E1 0%, #FFFFFF 100%);
+    .theme-warm-embrace.scheme-1 {
+      background: #FFF8F0;
+      color: #4A4A4A;
+    }
+
+    .theme-warm-embrace.scheme-1 .container {
+      background: #FFFFFF;
+      margin: clamp(1.2rem, 5.5vw, 3.5rem);
+      padding: clamp(1.2rem, 3.5vw, 2.2rem);
+      border: 0;
+      border-radius: 6px;
+      box-shadow: 1px 2px 8px rgba(0,0,0,0.03);
+    }
+    .theme-warm-embrace.scheme-1 .product-card {
+      background: #FFFFFF;
+      border: 0;
+      border-radius: 10px;
+      box-shadow: 3px 5px 12px rgba(0,0,0,0.08);
+    }
+    .theme-warm-embrace.scheme-1 .button--primary {
+      background: #C90084;
+      color: #FFFFFF;
+    }
+    .theme-warm-embrace.scheme-1 .button--secondary {
+      background: #FCE4EC;
+      color: #C90084;
+    }
+    .theme-warm-embrace.scheme-1 .button--outline {
+      background: transparent;
+      border: 1px solid #C90084;
+      color: #C90084;
+    }
+    .theme-warm-embrace.scheme-1 .nav-links a { color: #4A4A4A; }
+    .theme-warm-embrace.scheme-1 .nav-links a:hover,
+    .theme-warm-embrace.scheme-1 a { color: #C90084; }
+    .theme-warm-embrace.scheme-1 .typography-demo blockquote { border-color: #C90084; }
+    .theme-warm-embrace.scheme-1 .footer-links a { color: #4A4A4A; }
+    .theme-warm-embrace.scheme-1 .footer-links a:hover { color: #C90084; }
+
+    .theme-warm-embrace.scheme-2 {
+      background: #F5F5DC;
       color: #333333;
     }
 
-    .theme-intimate-warmth.scheme-1 .button--primary { background-color: #FF5722; color: #FFFFFF; }
-    .theme-intimate-warmth.scheme-1 .button--secondary { background-color: #E91E63; color: #FFFFFF; }
-    .theme-intimate-warmth.scheme-1 .button--outline { background-color: transparent; border: 1px solid #FF5722; color: #FF5722; }
-    .theme-intimate-warmth.scheme-1 .product-card { background-color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.15); padding: 20px; }
-    .theme-intimate-warmth.scheme-1 .container { background-color: rgba(0, 0, 0, 0.01); border: 1px solid rgba(255, 255, 255, 0.07); border-radius: 14px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
-    .theme-intimate-warmth.scheme-1 .nav-links a { color: #333333; }
-    .theme-intimate-warmth.scheme-1 .nav-links a:hover { color: #FF5722; }
-    .theme-intimate-warmth.scheme-1 .typography-demo blockquote { border-color: #FF5722; }
-    .theme-intimate-warmth.scheme-1 a { color: #FF5722; }
+    .theme-warm-embrace.scheme-2 .container {
+      background: #FFFFFF;
+      margin: clamp(1.2rem, 5.5vw, 3.5rem);
+      padding: clamp(1.2rem, 3.5vw, 2.2rem);
+      border: 0;
+      border-radius: 6px;
+      box-shadow: 1px 2px 8px rgba(0,0,0,0.03);
+    }
+    .theme-warm-embrace.scheme-2 .product-card {
+      background: #FFFFFF;
+      border: 0;
+      border-radius: 10px;
+      box-shadow: 3px 5px 12px rgba(0,0,0,0.07);
+    }
+    .theme-warm-embrace.scheme-2 .button--primary {
+      background: #FF69B4;
+      color: #FFFFFF;
+    }
+    .theme-warm-embrace.scheme-2 .button--secondary {
+      background: #FFE4E1;
+      color: #FF69B4;
+    }
+    .theme-warm-embrace.scheme-2 .button--outline {
+      background: transparent;
+      border: 1px solid #FF69B4;
+      color: #FF69B4;
+    }
+    .theme-warm-embrace.scheme-2 .nav-links a { color: #333333; }
+    .theme-warm-embrace.scheme-2 .nav-links a:hover,
+    .theme-warm-embrace.scheme-2 a { color: #FF69B4; }
+    .theme-warm-embrace.scheme-2 .typography-demo blockquote { border-color: #FF69B4; }
+    .theme-warm-embrace.scheme-2 .footer-links a { color: #333333; }
+    .theme-warm-embrace.scheme-2 .footer-links a:hover { color: #FF69B4; }
 
-    .theme-intimate-warmth.scheme-2 {
-      background: linear-gradient(135deg, #FFF9F9 0%, #FFFFFF 100%);
-      color: #333333;
+    .theme-warm-embrace.scheme-3 {
+      background: #FFF0F5;
+      color: #555555;
     }
 
-    .theme-intimate-warmth.scheme-2 .button--primary { background-color: #8E0E30; color: #FFFFFF; }
-    .theme-intimate-warmth.scheme-2 .button--secondary { background-color: #6A1B9A; color: #FFFFFF; }
-    .theme-intimate-warmth.scheme-2 .button--outline { background-color: transparent; border: 1px solid #8E0E30; color: #8E0E30; }
-    .theme-intimate-warmth.scheme-2 .product-card { background-color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.08); padding: 20px; }
-    .theme-intimate-warmth.scheme-2 .container { background-color: rgba(0, 0, 0, 0.01); border: 1px solid rgba(255, 255, 255, 0.07); border-radius: 14px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
-    .theme-intimate-warmth.scheme-2 .nav-links a { color: #333333; }
-    .theme-intimate-warmth.scheme-2 .nav-links a:hover { color: #8E0E30; }
-    .theme-intimate-warmth.scheme-2 .typography-demo blockquote { border-color: #8E0E30; }
-    .theme-intimate-warmth.scheme-2 a { color: #8E0E30; }
-
-    .theme-intimate-warmth.scheme-3 {
-      background: linear-gradient(135deg, #F5F0FF 0%, #FFFFFF 100%);
-      color: #333333;
+    .theme-warm-embrace.scheme-3 .container {
+      background: #FFFFFF;
+      margin: clamp(1.2rem, 5.5vw, 3.5rem);
+      padding: clamp(1.2rem, 3.5vw, 2.2rem);
+      border: 0;
+      border-radius: 6px;
+      box-shadow: 1px 2px 8px rgba(0,0,0,0.03);
     }
+    .theme-warm-embrace.scheme-3 .product-card {
+      background: #FFFFFF;
+      border: 0;
+      border-radius: 10px;
+      box-shadow: 3px 5px 12px rgba(0,0,0,0.05);
+    }
+    .theme-warm-embrace.scheme-3 .button--primary {
+      background: #45072F;
+      color: #FFFFFF;
+    }
+    .theme-warm-embrace.scheme-3 .button--secondary {
+      background: #E6E6FA;
+      color: #45072F;
+    }
+    .theme-warm-embrace.scheme-3 .button--outline {
+      background: transparent;
+      border: 1px solid #45072F;
+      color: #45072F;
+    }
+    .theme-warm-embrace.scheme-3 .nav-links a { color: #555555; }
+    .theme-warm-embrace.scheme-3 .nav-links a:hover,
+    .theme-warm-embrace.scheme-3 a { color: #45072F; }
+    .theme-warm-embrace.scheme-3 .typography-demo blockquote { border-color: #45072F; }
+    .theme-warm-embrace.scheme-3 .footer-links a { color: #555555; }
+    .theme-warm-embrace.scheme-3 .footer-links a:hover { color: #45072F; }
 
-    .theme-intimate-warmth.scheme-3 .button--primary { background-color: #9C27B0; color: #FFFFFF; }
-    .theme-intimate-warmth.scheme-3 .button--secondary { background-color: #F50057; color: #FFFFFF; }
-    .theme-intimate-warmth.scheme-3 .button--outline { background-color: transparent; border: 1px solid #9C27B0; color: #9C27B0; }
-    .theme-intimate-warmth.scheme-3 .product-card { background-color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.1); padding: 20px; }
-    .theme-intimate-warmth.scheme-3 .container { background-color: rgba(0, 0, 0, 0.01); border: 1px solid rgba(255, 255, 255, 0.07); border-radius: 14px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
-    .theme-intimate-warmth.scheme-3 .nav-links a { color: #333333; }
-    .theme-intimate-warmth.scheme-3 .nav-links a:hover { color: #9C27B0; }
-    .theme-intimate-warmth.scheme-3 .typography-demo blockquote { border-color: #9C27B0; }
-    .theme-intimate-warmth.scheme-3 a { color: #9C27B0; }
-
-    /* Bold Desire */
-    .theme-bold-desire {
-      font-family: 'Nunito Sans', sans-serif;
-      font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
+    /* Bolder Desire 2 */
+    .theme-bolder-desire-2 {
+      font-family: 'Roboto', sans-serif;
+      font-size: clamp(0.9rem, 1.9vw, 1.1rem);
       font-weight: 400;
       letter-spacing: 0.01em;
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
-    .theme-bold-desire h1, .theme-bold-desire h2, .theme-bold-desire h3, .theme-bold-desire h4, .theme-bold-desire h5, .theme-bold-desire h6 {
-      font-family: 'Crimson Text', serif;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-    }
-
-    .theme-bold-desire h1 { font-size: clamp(1.8rem, 1.3rem + 2.2vw, 3.8rem); font-weight: 700; }
-    .theme-bold-desire h2 { font-size: clamp(1.62rem, 1.17rem + 1.98vw, 3.42rem); font-weight: 700; }
-    .theme-bold-desire h3 { font-size: clamp(1.44rem, 1.04rem + 1.76vw, 3.04rem); font-weight: 600; }
-    .theme-bold-desire h4 { font-size: clamp(1.26rem, 0.91rem + 1.54vw, 2.66rem); font-weight: 600; }
-    .theme-bold-desire h5 { font-size: clamp(1.08rem, 0.78rem + 1.32vw, 2.28rem); font-weight: 500; }
-    .theme-bold-desire h6 { font-size: clamp(0.9rem, 0.65rem + 1.1vw, 1.9rem); font-weight: 500; }
-
-    .theme-bold-desire.scheme-1 {
-      background: linear-gradient(135deg, #000000 0%, #1A1A1A 100%);
-      color: #FFFFFF;
-    }
-
-    .theme-bold-desire.scheme-1 .button--primary { background-color: #FF0066; color: #FFFFFF; }
-    .theme-bold-desire.scheme-1 .button--secondary { background-color: #7B1FA2; color: #FFFFFF; }
-    .theme-bold-desire.scheme-1 .button--outline { background-color: transparent; border: 1px solid #FF0066; color: #FF0066; }
-    .theme-bold-desire.scheme-1 .product-card { background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5); padding: 20px; }
-    .theme-bold-desire.scheme-1 .container { background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); }
-    .theme-bold-desire.scheme-1 .nav-links a { color: #FFFFFF; }
-    .theme-bold-desire.scheme-1 .nav-links a:hover { color: #FF0066; }
-    .theme-bold-desire.scheme-1 .typography-demo blockquote { border-color: #FF0066; }
-    .theme-bold-desire.scheme-1 a { color: #FF0066; }
-
-    .theme-bold-desire.scheme-2 {
-      background: linear-gradient(135deg, #2C0A37 0%, #4A154B 100%);
-      color: #FFFFFF;
-    }
-
-    .theme-bold-desire.scheme-2 .button--primary { background-color: #F50057; color: #FFFFFF; }
-    .theme-bold-desire.scheme-2 .button--secondary { background-color: #FF9800; color: #FFFFFF; }
-    .theme-bold-desire.scheme-2 .button--outline { background-color: transparent; border: 1px solid #F50057; color: #F50057; }
-    .theme-bold-desire.scheme-2 .product-card { background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.3); padding: 20px; }
-    .theme-bold-desire.scheme-2 .container { background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); }
-    .theme-bold-desire.scheme-2 .nav-links a { color: #FFFFFF; }
-    .theme-bold-desire.scheme-2 .nav-links a:hover { color: #F50057; }
-    .theme-bold-desire.scheme-2 .typography-demo blockquote { border-color: #F50057; }
-    .theme-bold-desire.scheme-2 a { color: #F50057; }
-
-    .theme-bold-desire.scheme-3 {
-      background: linear-gradient(135deg, #FF1493 0%, #FF69B4 100%);
-      color: #FFFFFF;
-    }
-
-    .theme-bold-desire.scheme-3 .button--primary { background-color: #000000; color: #FFFFFF; }
-    .theme-bold-desire.scheme-3 .button--secondary { background-color: #7B1FA2; color: #FFFFFF; }
-    .theme-bold-desire.scheme-3 .button--outline { background-color: transparent; border: 1px solid #FFFFFF; color: #FFFFFF; }
-    .theme-bold-desire.scheme-3 .product-card { background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.2); padding: 20px; }
-    .theme-bold-desire.scheme-3 .container { background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); }
-    .theme-bold-desire.scheme-3 .nav-links a { color: #FFFFFF; }
-    .theme-bold-desire.scheme-3 .nav-links a:hover { color: #000000; }
-    .theme-bold-desire.scheme-3 .typography-demo blockquote { border-color: #FFFFFF; }
-    .theme-bold-desire.scheme-3 a { color: #FFFFFF; }
-
-    /* Elegant Temptation */
-    .theme-elegant-temptation {
-      font-family: 'Open Sans', sans-serif;
-      font-size: clamp(1rem, 0.9rem + 0.35vw, 1.18rem);
+    .theme-bolder-desire-2 h1, .theme-bolder-desire-2 h2,
+    .theme-bolder-desire-2 h3, .theme-bolder-desire-2 h4,
+    .theme-bolder-desire-2 h5, .theme-bolder-desire-2 h6 {
+      font-family: 'Anton', sans-serif;
       font-weight: 400;
-      letter-spacing: 0.01em;
-      line-height: 1.6;
-    }
-
-    .theme-elegant-temptation h1, .theme-elegant-temptation h2, .theme-elegant-temptation h3, .theme-elegant-temptation h4, .theme-elegant-temptation h5, .theme-elegant-temptation h6 {
-      font-family: 'Abril Fatface', serif;
-      letter-spacing: -0.025em;
+      letter-spacing: 0em;
       line-height: 1.15;
     }
 
-    .theme-elegant-temptation h1 { font-size: clamp(1.6rem, 1.2rem + 2vw, 3.2rem); font-weight: 400; }
-    .theme-elegant-temptation h2 { font-size: clamp(1.44rem, 1.08rem + 1.8vw, 2.88rem); font-weight: 400; }
-    .theme-elegant-temptation h3 { font-size: clamp(1.28rem, 0.96rem + 1.6vw, 2.56rem); font-weight: 400; }
-    .theme-elegant-temptation h4 { font-size: clamp(1.12rem, 0.84rem + 1.4vw, 2.24rem); font-weight: 400; }
-    .theme-elegant-temptation h5 { font-size: clamp(0.96rem, 0.72rem + 1.2vw, 1.92rem); font-weight: 400; }
-    .theme-elegant-temptation h6 { font-size: clamp(0.8rem, 0.6rem + 1vw, 1.6rem); font-weight: 400; }
+    .theme-bolder-desire-2 h1 { font-size: clamp(3rem, 6vw, 5rem); }
+    .theme-bolder-desire-2 h2 { font-size: clamp(2.7rem, 5.4vw, 4.5rem); }
+    .theme-bolder-desire-2 h3 { font-size: clamp(2.4rem, 4.8vw, 4rem); }
+    .theme-bolder-desire-2 h4 { font-size: clamp(2.1rem, 4.2vw, 3.5rem); }
+    .theme-bolder-desire-2 h5 { font-size: clamp(1.8rem, 3.6vw, 3rem); }
+    .theme-bolder-desire-2 h6 { font-size: clamp(1.5rem, 3vw, 2.5rem); }
 
-    .theme-elegant-temptation.scheme-1 {
-      background: linear-gradient(135deg, #121212 0%, #1E1E1E 100%);
-      color: #F5F5F5;
+    .theme-bolder-desire-2.scheme-1 {
+      background: #FFFFFF;
+      color: #000000;
     }
 
-    .theme-elegant-temptation.scheme-1 .button--primary { background-color: #D4AF37; color: #000000; }
-    .theme-elegant-temptation.scheme-1 .button--secondary { background-color: #9C27B0; color: #FFFFFF; }
-    .theme-elegant-temptation.scheme-1 .button--outline { background-color: transparent; border: 1px solid #D4AF37; color: #D4AF37; }
-    .theme-elegant-temptation.scheme-1 .product-card { background-color: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; box-shadow: 1px 5px 10px rgba(0, 0, 0, 0.4); padding: 20px; }
-    .theme-elegant-temptation.scheme-1 .container { background-color: rgba(0, 0, 0, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); }
-    .theme-elegant-temptation.scheme-1 .nav-links a { color: #F5F5F5; }
-    .theme-elegant-temptation.scheme-1 .nav-links a:hover { color: #D4AF37; }
-    .theme-elegant-temptation.scheme-1 .typography-demo blockquote { border-color: #D4AF37; }
-    .theme-elegant-temptation.scheme-1 a { color: #D4AF37; }
+    .theme-bolder-desire-2.scheme-1 .container {
+      background: #FFFFFF;
+      margin: clamp(0.8rem, 4vw, 2rem);
+      padding: clamp(0.8rem, 2.5vw, 1.8rem);
+      border: 0;
+      border-radius: 0;
+      box-shadow: 2px 3px 6px rgba(0,0,0,0.08);
+    }
+    .theme-bolder-desire-2.scheme-1 .product-card {
+      background: #FFFFFF;
+      border: 2px solid rgba(0,0,0,0.15);
+      border-radius: 4px;
+      box-shadow: 3px 4px 8px rgba(0,0,0,0.15);
+    }
+    .theme-bolder-desire-2.scheme-1 .button--primary {
+      background: #C90084;
+      color: #FFFFFF;
+    }
+    .theme-bolder-desire-2.scheme-1 .button--secondary {
+      background: #F0F0F0;
+      color: #000000;
+    }
+    .theme-bolder-desire-2.scheme-1 .button--outline {
+      background: transparent;
+      border: 1px solid #000000;
+      color: #000000;
+    }
+    .theme-bolder-desire-2.scheme-1 .nav-links a { color: #000000; }
+    .theme-bolder-desire-2.scheme-1 .nav-links a:hover,
+    .theme-bolder-desire-2.scheme-1 a { color: #C90084; }
+    .theme-bolder-desire-2.scheme-1 .typography-demo blockquote { border-color: #C90084; }
+    .theme-bolder-desire-2.scheme-1 .footer-links a { color: #000000; }
+    .theme-bolder-desire-2.scheme-1 .footer-links a:hover { color: #C90084; }
 
-    .theme-elegant-temptation.scheme-2 {
-      background: linear-gradient(135deg, #FFF5F2 0%, #FFFFFF 100%);
+    .theme-bolder-desire-2.scheme-2 {
+      background: #000000;
+      color: #FFFFFF;
+    }
+
+    .theme-bolder-desire-2.scheme-2 .container {
+      background: #FFFFFF;
+      margin: clamp(0.8rem, 4vw, 2rem);
+      padding: clamp(0.8rem, 2.5vw, 1.8rem);
+      border: 0;
+      border-radius: 0;
+      box-shadow: 2px 3px 6px rgba(0,0,0,0.08);
+    }
+    .theme-bolder-desire-2.scheme-2 .product-card {
+      background: #FFFFFF;
+      border: 2px solid rgba(0,0,0,0.15);
+      border-radius: 4px;
+      box-shadow: 3px 4px 8px rgba(255,255,255,0.08);
+    }
+    .theme-bolder-desire-2.scheme-2 .button--primary {
+      background: #FF69B4;
+      color: #000000;
+    }
+    .theme-bolder-desire-2.scheme-2 .button--secondary {
+      background: #333333;
+      color: #FFFFFF;
+    }
+    .theme-bolder-desire-2.scheme-2 .button--outline {
+      background: transparent;
+      border: 1px solid #FFFFFF;
+      color: #FFFFFF;
+    }
+    .theme-bolder-desire-2.scheme-2 .nav-links a { color: #FFFFFF; }
+    .theme-bolder-desire-2.scheme-2 .nav-links a:hover,
+    .theme-bolder-desire-2.scheme-2 a { color: #FF69B4; }
+    .theme-bolder-desire-2.scheme-2 .typography-demo blockquote { border-color: #FF69B4; }
+    .theme-bolder-desire-2.scheme-2 .footer-links a { color: #FFFFFF; }
+    .theme-bolder-desire-2.scheme-2 .footer-links a:hover { color: #FF69B4; }
+
+    .theme-bolder-desire-2.scheme-3 {
+      background: #FFFFFF;
       color: #333333;
     }
 
-    .theme-elegant-temptation.scheme-2 .button--primary { background-color: #FF6F61; color: #FFFFFF; }
-    .theme-elegant-temptation.scheme-2 .button--secondary { background-color: #884EA0; color: #FFFFFF; }
-    .theme-elegant-temptation.scheme-2 .button--outline { background-color: transparent; border: 1px solid #FF6F61; color: #FF6F61; }
-    .theme-elegant-temptation.scheme-2 .product-card { background-color: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; box-shadow: 1px 5px 10px rgba(0, 0, 0, 0.1); padding: 20px; }
-    .theme-elegant-temptation.scheme-2 .container { background-color: rgba(0, 0, 0, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); }
-    .theme-elegant-temptation.scheme-2 .nav-links a { color: #333333; }
-    .theme-elegant-temptation.scheme-2 .nav-links a:hover { color: #FF6F61; }
-    .theme-elegant-temptation.scheme-2 .typography-demo blockquote { border-color: #FF6F61; }
-    .theme-elegant-temptation.scheme-2 a { color: #FF6F61; }
-
-    .theme-elegant-temptation.scheme-3 {
-      background: linear-gradient(135deg, #FFF0F5 0%, #FFFFFF 100%);
-      color: #333333;
+    .theme-bolder-desire-2.scheme-3 .container {
+      background: #FFFFFF;
+      margin: clamp(0.8rem, 4vw, 2rem);
+      padding: clamp(0.8rem, 2.5vw, 1.8rem);
+      border: 0;
+      border-radius: 0;
+      box-shadow: 2px 3px 6px rgba(0,0,0,0.08);
     }
-
-    .theme-elegant-temptation.scheme-3 .button--primary { background-color: #800020; color: #FFFFFF; }
-    .theme-elegant-temptation.scheme-3 .button--secondary { background-color: #9932CC; color: #FFFFFF; }
-    .theme-elegant-temptation.scheme-3 .button--outline { background-color: transparent; border: 1px solid #800020; color: #800020; }
-    .theme-elegant-temptation.scheme-3 .product-card { background-color: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; box-shadow: 1px 5px 10px rgba(0, 0, 0, 0.1); padding: 20px; }
-    .theme-elegant-temptation.scheme-3 .container { background-color: rgba(0, 0, 0, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); }
-    .theme-elegant-temptation.scheme-3 .nav-links a { color: #333333; }
-    .theme-elegant-temptation.scheme-3 .nav-links a:hover { color: #800020; }
-    .theme-elegant-temptation.scheme-3 .typography-demo blockquote { border-color: #800020; }
-    .theme-elegant-temptation.scheme-3 a { color: #800020; }
+    .theme-bolder-desire-2.scheme-3 .product-card {
+      background: #FFFFFF;
+      border: 2px solid rgba(0,0,0,0.15);
+      border-radius: 4px;
+      box-shadow: 3px 4px 8px rgba(0,0,0,0.1);
+    }
+    .theme-bolder-desire-2.scheme-3 .button--primary {
+      background: #45072F;
+      color: #FFFFFF;
+    }
+    .theme-bolder-desire-2.scheme-3 .button--secondary {
+      background: #F8F8F8;
+      color: #45072F;
+    }
+    .theme-bolder-desire-2.scheme-3 .button--outline {
+      background: transparent;
+      border: 1px solid #45072F;
+      color: #45072F;
+    }
+    .theme-bolder-desire-2.scheme-3 .nav-links a { color: #333333; }
+    .theme-bolder-desire-2.scheme-3 .nav-links a:hover,
+    .theme-bolder-desire-2.scheme-3 a { color: #45072F; }
+    .theme-bolder-desire-2.scheme-3 .typography-demo blockquote { border-color: #45072F; }
+    .theme-bolder-desire-2.scheme-3 .footer-links a { color: #333333; }
+    .theme-bolder-desire-2.scheme-3 .footer-links a:hover { color: #45072F; }
   </style>
 </head>
-<body class="theme-original-passionate-elegance scheme-1">
-  <nav>
+<body class="theme-sophisticated-allure scheme-1">
+  <header>
     <div class="container">
-      <div class="nav-links">
-        <a data-section="home">Home</a>
-        <a data-section="about">About</a>
-        <a data-section="product">Product</a>
-        <a data-section="collections">Collections</a>
-        <a data-section="faq">FAQ</a>
-        <a data-section="typography">Typography Demo</a>
-      </div>
+      <nav>
+        <a href="#" class="logo">Luxe Intimates</a>
+        <div class="nav-links">
+          <a data-section="home">Home</a>
+          <a data-section="about">About</a>
+          <a data-section="product">Product</a>
+          <a data-section="collections">Collections</a>
+          <a data-section="faq">FAQ</a>
+          <a data-section="typography">Typography Demo</a>
+        </div>
+      </nav>
     </div>
-  </nav>
+  </header>
+
   <div class="container">
     <div class="controls">
-      <h1 id="theme-title">Original Passionate Elegance</h1>
-      <select id="theme-select">
-        <option value="original-passionate-elegance">Original Passionate Elegance</option>
-        <option value="original-playful-seduction">Original Playful Seduction</option>
-        <option value="original-luxurious-mystery">Original Luxurious Mystery</option>
-        <option value="original-modern-minimalism">Original Modern Minimalism</option>
-        <option value="original-classic-romance">Original Classic Romance</option>
-        <option value="passionate-elegance">Passionate Elegance</option>
-        <option value="playful-luxury">Playful Luxury</option>
-        <option value="intimate-warmth">Intimate Warmth</option>
-        <option value="bold-desire">Bold Desire</option>
-        <option value="elegant-temptation">Elegant Temptation</option>
-      </select>
-      <select id="scheme-select">
-        <option value="scheme-1">Color Scheme 1</option>
-        <option value="scheme-2">Color Scheme 2</option>
-        <option value="scheme-3">Color Scheme 3</option>
-      </select>
+      <div>
+        <label for="theme-select">Theme: </label>
+        <select id="theme-select">
+          <option value="sophisticated-allure">Sophisticated Allure</option>
+          <option value="playful-passion">Playful Passion</option>
+          <option value="midnight-mystery">Midnight Mystery</option>
+          <option value="warm-embrace">Warm Embrace</option>
+          <option value="bolder-desire-2">Bolder Desire 2</option>
+        </select>
+      </div>
+      <div>
+        <label for="scheme-select">Scheme: </label>
+        <select id="scheme-select">
+          <option value="scheme-1">Scheme 1</option>
+          <option value="scheme-2">Scheme 2</option>
+          <option value="scheme-3">Scheme 3</option>
+        </select>
+      </div>
+      <div id="theme-title">Sophisticated Allure</div>
     </div>
 
-    <!-- Home Page -->
     <section id="home" class="section active">
-      <article class="hero" style="background-image: url('https://images.unsplash.com/photo-1518609878373-06d740f60d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')">
-        <h1>Unleash Your Desires</h1>
-        <h2>Explore Our Collection</h2>
-        <h3>Premium Comfort</h3>
-        <h4>Designed for You</h4>
-        <h5>Bold and Beautiful</h5>
-        <h6>Intimate Luxury</h6>
-        <p>Indulge in our premium sex pillows, crafted in bold pink, deep black, and sultry purple.</p>
-        <p>Experience elegance and comfort in every moment.</p>
-        <blockquote>"A game-changer for intimate relaxation." - Happy User</blockquote>
-        <figure>
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Pillow Image">
-          <figcaption>Our Sensual Wedge in action.</figcaption>
-        </figure>
-        <div class="buttons">
-          <button class="button button--primary">Shop Now</button>
-          <button class="button button--secondary">Learn More</button>
-          <button class="button button--outline">Explore</button>
-        </div>
-        <p>Visit our <a href="#">collections</a> for more.</p>
-      </article>
-      <h2>Featured Products</h2>
+      <div class="hero" style="background-image: url('https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')">
+        <h1>Unleash Your Inner Elegance</h1>
+        <p>Discover luxurious intimates crafted for comfort and allure.</p>
+        <button class="button button--primary">Shop Now</button>
+      </div>
+      <h2>Featured Collections</h2>
       <div class="product-grid">
         <div class="product-card">
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Sex Pillow">
-          <h4>Sensual Wedge - Male</h4>
-          <p>$89.99</p>
+          <img src="https://images.unsplash.com/photo-1583766395091-2eb9994ed094?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Silk Elegance">
+          <h3>Silk Elegance</h3>
+          <p>Soft, luxurious silk for unmatched comfort.</p>
+          <button class="button button--outline">View Details</button>
+        </div>
+        <div class="product-card">
+          <img src="https://images.unsplash.com/photo-1590400668398-7dc1e9e1f6c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Lace Allure">
+          <h3>Lace Allure</h3>
+          <p>Delicate lace designs for a touch of seduction.</p>
+          <button class="button button--outline">View Details</button>
+        </div>
+        <div class="product-card">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Velvet Passion">
+          <h3>Velvet Passion</h3>
+          <p>Plush velvet for a bold, sensual feel.</p>
+          <button class="button button--outline">View Details</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <h1>About Luxe Intimates</h1>
+      <p>At Luxe Intimates, we believe in celebrating individuality and confidence through premium, thoughtfully designed intimates.</p>
+      <blockquote>"Empowerment begins with comfort and style." – Our Founder</blockquote>
+      <h2>Our Mission</h2>
+      <p>To craft luxurious, sustainable intimates that inspire confidence and allure.</p>
+      <button class="button button--secondary">Learn More</button>
+    </section>
+
+    <section id="product" class="section">
+      <div class="hero" style="background-image: url('https://images.unsplash.com/photo-1583394293214-28ded15f4d98?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')">
+        <h1>Signature Silk Collection</h1>
+        <p>Experience the ultimate in luxury and comfort.</p>
+        <button class="button button--primary">Explore Now</button>
+      </div>
+      <h2>Product Details</h2>
+      <p>Our silk collection is crafted from the finest materials, ensuring a perfect blend of elegance and comfort.</p>
+      <div class="product-grid">
+        <div class="product-card">
+          <img src="https://images.unsplash.com/photo-1598546720078-8659873bc67d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Silk Robe">
+          <h3>Silk Robe</h3>
+          <p>Flowing silk robe for effortless elegance.</p>
           <button class="button button--outline">Add to Cart</button>
         </div>
         <div class="product-card">
-          <img src="https://images.unsplash.com/photo-1618221710640-c0eaaa2adb68?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Sex Pillow">
-          <h4>Sensual Wedge - Female</h4>
-          <p>$89.99</p>
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Silk Slip">
+          <h3>Silk Slip</h3>
+          <p>Sleek and soft for a luxurious feel.</p>
           <button class="button button--outline">Add to Cart</button>
         </div>
       </div>
     </section>
 
-    <!-- About Page -->
-    <section id="about" class="section">
-      <article>
-        <h1>Our Story</h1>
-        <h2>Who We Are</h2>
-        <h3>Our Mission</h3>
-        <h4>Crafted with Care</h4>
-        <h5>Quality Matters</h5>
-        <h6>Since 2025</h6>
-        <p>Luxe Intimates is dedicated to igniting passion with our exquisitely designed sex pillows. Available in male and female versions, our products blend luxury, comfort, and a touch of seduction.</p>
-        <p>Our mission is to empower intimate moments with elegance and quality. Every pillow is crafted to enhance your experience, wrapped in vibrant colors that inspire desire.</p>
-        <blockquote>"Luxury meets functionality in every design." - Founder</blockquote>
-        <figure>
-          <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2f4f16?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Team Image">
-          <figcaption>Our passionate team at work.</figcaption>
-        </figure>
-        <div class="buttons">
-          <button class="button button--primary">Meet the Team</button>
-          <button class="button button--secondary">Discover More</button>
-          <button class="button button--outline">Contact Us</button>
-        </div>
-        <p>Learn more about us <a href="#">here</a>.</p>
-      </article>
-    </section>
-
-    <!-- Product Page -->
-    <section id="product" class="section">
-      <article>
-        <h1>Sensual Wedge - Male</h1>
-        <h2>Product Details</h2>
-        <h3>Features</h3>
-        <h4>Specifications</h4>
-        <h5>Price: $89.99</h5>
-        <h6>Available Now</h6>
-        <div style="display: flex; gap: 20px;">
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Sex Pillow" style="width: 50%; border-radius: 8px;">
-          <div>
-            <p>Elevate your intimate moments with our Sensual Wedge for men. Available in bold pink, deep black, and sultry purple, it’s designed for comfort and style.</p>
-            <p>Made with premium materials for lasting enjoyment.</p>
-            <blockquote>"Best purchase for comfort!" - Customer Review</blockquote>
-            <div class="buttons">
-              <button class="button button--primary">Add to Cart</button>
-              <button class="button button--secondary">View Female Version</button>
-              <button class="button button--outline">View Details</button>
-            </div>
-            <p>Check out <a href="#">similar products</a>.</p>
-          </div>
-        </div>
-        <figure>
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Product Image">
-          <figcaption>The Sensual Wedge in bold pink.</figcaption>
-        </figure>
-      </article>
-    </section>
-
-    <!-- Collections Page -->
     <section id="collections" class="section">
-      <article>
-        <h1>Explore Our Collections</h1>
-        <h2>Curated Selections</h2>
-        <h3>For Every Desire</h3>
-        <h4>Male & Female</h4>
-        <h5>Unique Designs</h5>
-        <h6>Shop Now</h6>
-        <p>Discover our range of sex pillows and accessories, each designed to elevate your experience.</p>
-        <blockquote>"A collection that speaks to every taste." - Reviewer</blockquote>
-        <div class="product-grid">
-          <div class="product-card">
-            <figure>
-              <img src="https://images.unsplash.com/photo-1618221710640-c0eaaa2adb68?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Female Collection">
-              <figcaption>Female Collection</figcaption>
-            </figure>
-            <h4>Female Collection</h4>
-            <p>Curated for women, in captivating colors.</p>
-            <div class="buttons">
-              <button class="button button--primary">Shop Now</button>
-              <button class="button button--outline">Details</button>
-            </div>
-            <p><a href="#">View more</a></p>
-          </div>
-          <div class="product-card">
-            <figure>
-              <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Male Collection">
-              <figcaption>Male Collection</figcaption>
-            </figure>
-            <h4>Male Collection</h4>
-            <p>Designed for men, with bold elegance.</p>
-            <div class="buttons">
-              <button class="button button--primary">Shop Now</button>
-              <button class="button button--outline">Details</button>
-            </div>
-            <p><a href="#">View more</a></p>
-          </div>
-          <div class="product-card">
-            <figure>
-              <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2f4f16?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Accessories">
-              <figcaption>Accessories</figcaption>
-            </figure>
-            <h4>Accessories</h4>
-            <p>Enhance your experience with our add-ons.</p>
-            <div class="buttons">
-              <button class="button button--primary">Shop Now</button>
-              <button class="button button--outline">Details</button>
-            </div>
-            <p><a href="#">View more</a></p>
-          </div>
+      <h1>Our Collections</h1>
+      <p>Explore our curated collections designed for every mood and moment.</p>
+      <div class="product-grid">
+        <div class="product-card">
+          <img src="https://images.unsplash.com/photo-1583766395091-2eb9994ed094?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Romantic Lace">
+          <h3>Romantic Lace</h3>
+          <p>Delicate and intricate designs for special occasions.</p>
+          <button class="button button--secondary">Shop Collection</button>
         </div>
-      </article>
+        <div class="product-card">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Bold Velvet">
+          <h3>Bold Velvet</h3>
+          <p>Rich textures for a daring look.</p>
+          <button class="button button--secondary">Shop Collection</button>
+        </div>
+        <div class="product-card">
+          <img src="https://images.unsplash.com/photo-1598546720078-8659873bc67d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Classic Silk">
+          <h3>Classic Silk</h3>
+          <p>Timeless elegance in every piece.</p>
+          <button class="button button--secondary">Shop Collection</button>
+        </div>
+      </div>
     </section>
 
-    <!-- FAQ Page -->
     <section id="faq" class="section">
-      <article>
-        <h1>Frequently Asked Questions</h1>
-        <h2>Your Queries Answered</h2>
-        <h3>Common Questions</h3>
-        <h4>Shipping Info</h4>
-        <h5>Product Details</h5>
-        <h6>Contact Us</h6>
-        <div class="faq-item">
-          <h4>What are the pillows made of?</h4>
-          <p>Our pillows feature premium, body-safe foam with a soft, removable cover for easy cleaning.</p>
-        </div>
-        <div class="faq-item">
-          <h4>Is shipping discreet?</h4>
-          <p>Absolutely, all packages are shipped in plain, unmarked boxes for your privacy.</p>
-        </div>
-        <div class="faq-item">
-          <h4>What is your return policy?</h4>
-          <p>We offer a 30-day return policy for unused items in original packaging. Reach out to our team for assistance.</p>
-        </div>
-        <blockquote>"Quick answers, great service!" - Customer</blockquote>
-        <figure>
-          <img src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="FAQ Image">
-          <figcaption>Our commitment to you.</figcaption>
-        </figure>
-        <div class="buttons">
-          <button class="button button--primary">Ask a Question</button>
-          <button class="button button--secondary">Support</button>
-          <button class="button button--outline">More FAQs</button>
-        </div>
-        <p>Get in touch via <a href="#">support</a>.</p>
-      </article>
+      <h1>Frequently Asked Questions</h1>
+      <div class="faq-item">
+        <h3>What materials do you use?</h3>
+        <p>We use premium silk, lace, and velvet, all sourced sustainably.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How do I care for my intimates?</h3>
+        <p>Hand wash with mild detergent and air dry for best results.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Do you offer international shipping?</h3>
+        <p>Yes, we ship worldwide with discreet packaging.</p>
+      </div>
+      <button class="button button--outline">Contact Support</button>
     </section>
 
-    <!-- Typography Demo Page -->
     <section id="typography" class="section">
-      <article class="typography-demo">
-        <h1>Typography Demo</h1>
-        <h2>Heading Levels</h2>
-        <h3>Body Text</h3>
-        <h4>Quotes and More</h4>
-        <h5>Buttons</h5>
-        <h6>Links</h6>
-        <p>This is a paragraph showcasing the body text. It’s designed to be warm, inviting, and slightly naughty while maintaining professionalism. Luxe Intimates is all about enhancing your intimate moments with style and comfort.</p>
-        <p>Here’s another paragraph to demonstrate consistency in typography. Our pillows are crafted with premium materials, ensuring both durability and sensuality.</p>
-        <blockquote>
-          "The Sensual Wedge has transformed my intimate experiences. It’s both functional and stylish!" - Satisfied Customer
-        </blockquote>
-        <figure>
-          <img src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Sensual Image">
-          <figcaption>A captivating image to enhance your experience.</figcaption>
-        </figure>
-        <div class="buttons">
-          <button class="button button--primary">Primary Button</button>
-          <button class="button button--secondary">Secondary Button</button>
-          <button class="button button--outline">Outline Button</button>
-        </div>
-        <p>Explore more with <a href="#">this link</a> to see how links are styled.</p>
-      </article>
+      <h1>Typography Demo</h1>
+      <h1>Heading 1: Luxurious Comfort</h1>
+      <h2>Heading 2: Elegant Design</h2>
+      <h3>Heading 3: Premium Materials</h3>
+      <h4>Heading 4: Timeless Style</h4>
+      <h5>Heading 5: Subtle Allure</h5>
+      <h6>Heading 6: Fine Details</h6>
+      <p>This is a paragraph showcasing the body text style. Luxe Intimates offers a range of premium products designed for comfort and elegance.</p>
+      <blockquote>"Style is a way to say who you are without having to speak." – Rachel Zoe</blockquote>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1583394293214-28ded15f4d98?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Elegant Intimates">
+        <figcaption>Elegant intimates for every moment.</figcaption>
+      </figure>
+      <div class="buttons">
+        <button class="button button--primary">Primary Button</button>
+        <button class="button button--secondary">Secondary Button</button>
+        <button class="button button--outline">Outline Button</button>
+      </div>
+      <p>Explore our <a href="#">collections</a> for more inspiration.</p>
     </section>
   </div>
+
   <footer>
     <div class="container">
-      <p>© 2025 Luxe Intimates. All rights reserved.</p>
+      <p>&copy; 2025 Luxe Intimates. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+      </div>
     </div>
   </footer>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const themeSelect = document.getElementById('theme-select');
@@ -1091,40 +1126,74 @@
       const sections = document.querySelectorAll('.section');
 
       const themeNames = {
-        'original-passionate-elegance': 'Original Passionate Elegance',
-        'original-playful-seduction': 'Original Playful Seduction',
-        'original-luxurious-mystery': 'Original Luxurious Mystery',
-        'original-modern-minimalism': 'Original Modern Minimalism',
-        'original-classic-romance': 'Original Classic Romance',
-        'passionate-elegance': 'Passionate Elegance',
-        'playful-luxury': 'Playful Luxury',
-        'intimate-warmth': 'Intimate Warmth',
-        'bold-desire': 'Bold Desire',
-        'elegant-temptation': 'Elegant Temptation'
+        'sophisticated-allure': 'Sophisticated Allure',
+        'playful-passion': 'Playful Passion',
+        'midnight-mystery': 'Midnight Mystery',
+        'warm-embrace': 'Warm Embrace',
+        'bolder-desire-2': 'Bolder Desire 2'
       };
 
+      const defaultTheme = 'sophisticated-allure';
+      const defaultScheme = 'scheme-1';
+
       function updateTheme() {
-        const selectedTheme = themeSelect.value;
-        const selectedScheme = schemeSelect.value;
+        if (!themeSelect || !schemeSelect || !themeTitle) {
+          console.error('Required DOM elements are missing.');
+          return;
+        }
+
+        const selectedTheme = themeSelect.value && themeNames[themeSelect.value] ? themeSelect.value : defaultTheme;
+        const selectedScheme = schemeSelect.value && ['scheme-1', 'scheme-2', 'scheme-3'].includes(schemeSelect.value) ? schemeSelect.value : defaultScheme;
+
         body.className = `theme-${selectedTheme} ${selectedScheme}`;
-        themeTitle.textContent = themeNames[selectedTheme];
+        themeTitle.textContent = themeNames[selectedTheme] || 'Unknown Theme';
       }
 
-      themeSelect.addEventListener('change', updateTheme);
-      schemeSelect.addEventListener('change', updateTheme);
+      function handleNavigation(sectionId) {
+        if (!sectionId) {
+          console.error('Invalid section ID');
+          return;
+        }
+
+        const targetSection = document.getElementById(sectionId);
+        if (!targetSection) {
+          console.error(`Section with ID ${sectionId} not found`);
+          return;
+        }
+
+        sections.forEach(section => {
+          section.classList.toggle('active', section.id === sectionId);
+        });
+      }
+
+      if (themeSelect && schemeSelect) {
+        themeSelect.value = themeSelect.value || defaultTheme;
+        schemeSelect.value = schemeSelect.value || defaultScheme;
+
+        themeSelect.addEventListener('change', updateTheme);
+        schemeSelect.addEventListener('change', updateTheme);
+
+        updateTheme();
+      } else {
+        console.error('Theme or scheme select elements not found');
+        body.className = `theme-${defaultTheme} ${defaultScheme}`;
+        if (themeTitle) themeTitle.textContent = themeNames[defaultTheme];
+      }
 
       navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
           const sectionId = link.getAttribute('data-section');
-          sections.forEach(section => {
-            section.classList.toggle('active', section.id === sectionId);
-          });
+          handleNavigation(sectionId);
         });
       });
 
-      // Initialize theme on load
-      updateTheme();
+      if (!document.querySelector('.section.active')) {
+        const firstSection = sections[0];
+        if (firstSection) {
+          firstSection.classList.add('active');
+        }
+      }
     });
   </script>
 </body>
